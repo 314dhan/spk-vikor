@@ -11,7 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('kriterias', function (Blueprint $table) {
+            $table->id();
+            $table->string('kode_kriteria')->unique();
+            $table->string('nama_kriteria');
+            $table->decimal('bobot', 5, 2); // misalnya bobot maksimal 999.99
+            $table->enum('jenis', ['cost', 'benefit']);
+            $table->text('description')->nullable();
+            $table->timestamps(); // created_at & updated_at
+        });
     }
 
     /**
@@ -19,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('kriterias');
     }
 };
