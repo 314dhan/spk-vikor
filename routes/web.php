@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\PenilaianController;
 
 // HOME NANTI AKAN DIGANTI DENGAN DASHBOARD
 Route::get('/', function () {
@@ -28,3 +29,7 @@ Route::resource('/kriteria', KriteriaController::class)->except(['show']);
 
 // ALTERNATIF
 Route::resource('alternatif', \App\Http\Controllers\AlternatifController::class);
+
+// PENILAIAN
+Route::get('/penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
+Route::post('/penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
