@@ -55,47 +55,47 @@ class VikorCalculationController extends Controller
         $rankings = $this->calculateRanking($qValues);
 
         // Simpan ke database
-        $this->saveCalculations($rankings);
+        $this->saveCalculations($rankings, $sRValues);
 
         return redirect('/perhitungan')->with('success', 'Perhitungan VIKOR berhasil dilakukan!');
     }
 
-    private function normalizeMatrix($penilaians, $kriterias)
+    private function normalizeMatrix($penilaians)
     {
         $matrix = [];
         $maxValues = [];
         $minValues = [];
 
-        // Inisialisasi max dan min untuk setiap kriteria
-        foreach ($kriterias as $kriteria) {
-            $maxValues[$kriteria->id] = -INF;
-            $minValues[$kriteria->id] = INF;
-        }
-
-        // Cari max dan min untuk normalisasi
+        // Hitung max dan min untuk setiap kriteria
         foreach ($penilaians as $penilaian) {
-            $value = $penilaian->nilai;
             $kriteriaId = $penilaian->kriteria_id;
+            $value = $penilaian->nilai;
 
-            if ($value > $maxValues[$kriteriaId]) {
+            if (!isset($maxValues[$kriteriaId])) {
                 $maxValues[$kriteriaId] = $value;
-            }
-            if ($value < $minValues[$kriteriaId]) {
                 $minValues[$kriteriaId] = $value;
+            } else {
+                $maxValues[$kriteriaId] = max($maxValues[$kriteriaId], $value);
+                $minValues[$kriteriaId] = min($minValues[$kriteriaId], $value);
             }
         }
 
-        // Normalisasi
+        // Normalisasi matriks dengan penanganan division by zero
         foreach ($penilaians as $penilaian) {
-            $kriteria = $kriterias->find($penilaian->kriteria_id);
+            $kriteria = $penilaian->kriteria;
             $value = $penilaian->nilai;
 
-            if ($kriteria->jenis == 'benefit') {
-                $normalized = ($value - $minValues[$kriteria->id]) /
-                            ($maxValues[$kriteria->id] - $minValues[$kriteria->id]);
+            $range = $maxValues[$kriteria->id] - $minValues[$kriteria->id];
+
+            // Handle division by zero
+            if ($range == 0) {
+                $normalized = 1; // atau 0, tergantung kebutuhan
             } else {
-                $normalized = ($maxValues[$kriteria->id] - $value) /
-                            ($maxValues[$kriteria->id] - $minValues[$kriteria->id]);
+                if ($kriteria->jenis == 'benefit') {
+                    $normalized = ($value - $minValues[$kriteria->id]) / $range;
+                } else {
+                    $normalized = ($maxValues[$kriteria->id] - $value) / $range;
+                }
             }
 
             $matrix[$penilaian->alternatif_id][$penilaian->kriteria_id] = $normalized;
@@ -114,13 +114,15 @@ class VikorCalculationController extends Controller
 
             foreach ($kriteriaValues as $kriteriaId => $value) {
                 $kriteria = $kriterias->find($kriteriaId);
-                $weightedValue = $value * $kriteria->bobot;
 
-                $s += $weightedValue;
-
-                if ($weightedValue > $r) {
-                    $r = $weightedValue;
+                // Pastikan kriteria ditemukan
+                if (!$kriteria) {
+                    continue;
                 }
+
+                $weightedValue = $value * $kriteria->bobot;
+                $s += $weightedValue;
+                $r = max($r, $weightedValue);
             }
 
             $results[$alternatifId] = [
@@ -134,7 +136,6 @@ class VikorCalculationController extends Controller
 
     private function calculateQ($sRValues, $v)
     {
-        // Cari S+ S- R+ R-
         $sValues = array_column($sRValues, 's');
         $rValues = array_column($sRValues, 'r');
 
@@ -143,10 +144,13 @@ class VikorCalculationController extends Controller
         $rPlus = max($rValues);
         $rMinus = min($rValues);
 
-        // Hitung Q untuk setiap alternatif
+        // Handle division by zero
+        $sRange = ($sPlus - $sMinus) ?: 1;
+        $rRange = ($rPlus - $rMinus) ?: 1;
+
         $qValues = [];
         foreach ($sRValues as $alternatifId => $values) {
-            $q = $v * (($values['s'] - $sMinus) / ($sPlus - $sMinus)) + (1 - $v) * (($values['r'] - $rMinus) / ($rPlus - $rMinus));
+            $q = $v * (($values['s'] - $sMinus) / $sRange) + (1 - $v) * (($values['r'] - $rMinus) / $rRange);
 
             $qValues[$alternatifId] = $q;
         }
@@ -172,7 +176,7 @@ class VikorCalculationController extends Controller
         return $rankings;
     }
 
-    private function saveCalculations($rankings)
+    private function saveCalculations($rankings, $sRValues)
     {
         // Hapus perhitungan lama
         VikorCalculation::truncate();
@@ -181,59 +185,11 @@ class VikorCalculationController extends Controller
         foreach ($rankings as $alternatifId => $data) {
             VikorCalculation::create([
                 'alternatif_id' => $alternatifId,
-                'nilai_s' => $data['s'] ?? 0,
-                'nilai_r' => $data['r'] ?? 0,
+                'nilai_s' => $sRValues[$alternatifId]['s'] ?? 0,
+                'nilai_r' => $sRValues[$alternatifId]['r'] ?? 0,
                 'nilai_q' => $data['q'],
                 'ranking' => $data['rank']
             ]);
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
