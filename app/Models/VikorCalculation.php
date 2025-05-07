@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class VikorCalculation extends Model
 {
+
+    protected $table = 'vikor_calculations';
     protected $fillable = [
         'alternatif_id',
         'nilai_s',
