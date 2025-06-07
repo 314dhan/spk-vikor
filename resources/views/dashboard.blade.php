@@ -17,7 +17,7 @@
                     <a href="/alternatif" class="list-group-item list-group-item-action">Alternatif</a>
                     <a href="/penilaian" class="list-group-item list-group-item-action">Penilaian</a>
                     <a href="/perhitungan" class="list-group-item list-group-item-action">Perhitungan VIKOR</a>
-                    <a href="/hasil" class="list-group-item list-group-item-action">Hasil Keputusan</a>
+                    {{-- <a href="/hasil" class="list-group-item list-group-item-action">Hasil Keputusan</a> --}}
                 </div>
             </div>
         </div>

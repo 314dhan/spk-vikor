@@ -10,9 +10,6 @@ use App\Models\VikorCalculation; // Import the VikorCalculation model (no change
 
 class VikorCalculationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $alternatifs = Alternatif::with('penilaian.kriteria')->get();

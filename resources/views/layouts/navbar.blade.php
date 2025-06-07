@@ -28,7 +28,7 @@
             </ul>
             <form action="{{ route('logout') }}" method="POST" class="d-flex">
                 @csrf
-                <button type="submit" class="btn btn-outline-light">Logout</button>
+                <button type="submit" class="btn btn-danger btn-outline-light">Logout</button>
             </form>
         </div>
     </div>
