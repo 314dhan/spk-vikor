@@ -19,6 +19,7 @@
 <body>
     <div class="header">
         <h1>{{ $title }}</h1>
+        <p>Jumlah yang lulus: {{ $jumlah_lulus }} dari {{ count($calculations) }}</p>
         <p>Dicetak pada: {{ date('d F Y H:i:s') }}</p>
     </div>
 
@@ -29,24 +30,21 @@
                 <th>No</th>
                 <th>Ranking</th>
                 <th>Alternatif</th>
-                <th>Nilai S (Utility)</th>
-                <th>Nilai R (Regret)</th>
+                <th>Nilai S</th>
+                <th>Nilai R</th>
                 <th>Nilai Q</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @php
-                $counter = 0;
-                $nomor_urut = 1;
-            @endphp
+            @php $counter = 0; @endphp
             @foreach($calculations as $calc)
                 @php
                     $counter++;
                     $lulus = $counter <= $jumlah_lulus;
                 @endphp
-                <tr>
-                    <td>{{ $nomor_urut++ }}</td>
+                <tr class="{{ $lulus ? 'lulus' : 'tidak-lulus' }}">
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $calc->ranking }}</td>
                     <td>{{ $calc->alternatif->nama_alternatif }}</td>
                     <td>{{ number_format($calc->nilai_s, 4) }}</td>
@@ -65,7 +63,7 @@
     </table>
 
     <div class="footer">
-        <p>Sistem Pendukung Keputusan - Metode VIKOR</p>
+        <p>Total peserta: {{ count($calculations) }} | Jumlah lulus: {{ min($jumlah_lulus, count($calculations)) }}</p>
     </div>
 </body>
 </html>

@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Perhitungan Metode VIKOR</h5>
-                    <a href="{{ route('perhitungan.export') }}" class="btn btn-success">
+                    <a href="{{ route('perhitungan.export', ['jumlah_lulus' => request('jumlah_lulus', 5)]) }}" class="btn btn-success">
                         <i class="fas fa-file-pdf"></i> Export PDF
                     </a>
                 </div>

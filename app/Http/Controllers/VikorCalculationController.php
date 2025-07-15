@@ -202,8 +202,10 @@ class VikorCalculationController extends Controller
         }
     }
 
-    public function exportPDF()
+    public function exportPDF(Request $request)
     {
+        $jumlah_lulus = $request->query('jumlah_lulus', 5); // Ambil dari query parameter
+
         $data = [
             'title' => 'Laporan Hasil Perhitungan VIKOR',
             'calculations' => VikorCalculation::with('alternatif')
@@ -211,7 +213,7 @@ class VikorCalculationController extends Controller
                 ->get(),
             'kriterias' => Kriteria::all(),
             'alternatifs' => Alternatif::with('penilaian.kriteria')->get(),
-            'jumlah_lulus' => request('jumlah_lulus', 5)
+            'jumlah_lulus' => $jumlah_lulus // Gunakan nilai dari parameter
         ];
 
         $pdf = Pdf::loadView('perhitungan.export', $data);
