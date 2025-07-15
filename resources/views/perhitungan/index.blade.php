@@ -42,7 +42,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="jumlah_lulus">Jumlah yang Lulus:</label>
+                                    <label for="jumlah_lulus">Jumlah yang memenuhi:</label>
                                     <input type="number" min="1" max="{{ count($alternatifs) }}"
                                            class="form-control" id="jumlah_lulus" name="jumlah_lulus"
                                            value="{{ request('jumlah_lulus', 5) }}">

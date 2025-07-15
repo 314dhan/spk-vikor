@@ -33,6 +33,7 @@ class VikorCalculationController extends Controller
         // Validasi data
         $validated = $request->validate([
             'v' => 'required|numeric|between:0,1',
+            'jumlah_lulus' => 'required|integer|min:1'
         ]);
 
         // Ambil semua data yang diperlukan
@@ -55,7 +56,8 @@ class VikorCalculationController extends Controller
         // Simpan ke database
         $this->saveCalculations($rankings, $sRValues);
 
-        return redirect('/perhitungan')->with('success', 'Perhitungan VIKOR berhasil dilakukan!');
+        return redirect('/perhitungan?jumlah_lulus=' . $validated['jumlah_lulus'])
+            ->with('success', 'Perhitungan VIKOR berhasil dilakukan!');
     }
 
     private function normalizeMatrix($penilaians)
