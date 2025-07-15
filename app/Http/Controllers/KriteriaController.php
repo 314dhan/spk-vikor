@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Kriteria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KriteriaController extends Controller
 {
@@ -56,5 +57,16 @@ class KriteriaController extends Controller
     {
         $kriterium->delete();
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil dihapus.');
+    }
+
+    public function destroyAll()
+    {
+        // Jika ada relasi, hapus dulu data terkait
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Kriteria::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        return redirect()->route('kriteria.index')
+            ->with('success', 'Semua data kriteria berhasil dihapus.');
     }
 }

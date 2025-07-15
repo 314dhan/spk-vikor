@@ -8,9 +8,20 @@
     <h4>Data Kriteria</h4>
     {{-- <a href="{{ route('kriteria.create') }}" class="btn btn-primary mb-3">Tambah Kriteria</a> --}}
 
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalKriteriaTambah">
-        Tambah Kriteria
-    </button>
+    <div class="d-flex justify-content-between mb-3">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalKriteriaTambah">
+            Tambah Kriteria
+        </button>
+
+        <!-- Tombol Hapus Semua -->
+        <form action="{{ route('kriteria.destroyAll') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus SEMUA kriteria? Tindakan ini tidak dapat dibatalkan!')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash-alt"></i> Hapus Semua Kriteria
+            </button>
+        </form>
+    </div>
 
     <!-- Modal Tambah -->
     <div class="modal fade" id="modalKriteriaTambah" tabindex="-1" aria-labelledby="modalLabelTambah" aria-hidden="true">
