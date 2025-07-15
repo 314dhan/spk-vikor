@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class VikorCalculation extends Model
 {
-
     protected $table = 'vikor_calculations';
     protected $fillable = [
         'alternatif_id',
@@ -19,5 +18,11 @@ class VikorCalculation extends Model
     public function alternatif()
     {
         return $this->belongsTo(Alternatif::class);
+    }
+
+    // Tambahkan accessor untuk memudahkan
+    public function getStatusAttribute()
+    {
+        return $this->ranking <= 5 ? 'Memenuhi Kriteria' : 'Tidak Memenuhi Kriteria';
     }
 }

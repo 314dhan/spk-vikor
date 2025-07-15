@@ -6,7 +6,8 @@ use App\Models\Alternatif;
 use App\Models\Kriteria;
 use App\Models\Penilaian;
 use Illuminate\Http\Request;
-use App\Models\VikorCalculation; // Import the VikorCalculation model (no changes here)
+use App\Models\VikorCalculation;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VikorCalculationController extends Controller
 {
@@ -68,34 +69,31 @@ class VikorCalculationController extends Controller
             $kriteriaId = $penilaian->kriteria_id;
             $value = $penilaian->nilai;
 
-            if (!isset($maxValues[$kriteriaId])) {
+            if (!isset($maxValues[$kriteriaId]) || $value > $maxValues[$kriteriaId]) {
                 $maxValues[$kriteriaId] = $value;
+            }
+            if (!isset($minValues[$kriteriaId]) || $value < $minValues[$kriteriaId]) {
                 $minValues[$kriteriaId] = $value;
-            } else {
-                $maxValues[$kriteriaId] = max($maxValues[$kriteriaId], $value);
-                $minValues[$kriteriaId] = min($minValues[$kriteriaId], $value);
             }
         }
 
-        // Normalisasi matriks dengan penanganan division by zero
+        // Normalisasi matriks
         foreach ($penilaians as $penilaian) {
-            $kriteria = $penilaian->kriteria;
+            $kriteriaId = $penilaian->kriteria_id;
             $value = $penilaian->nilai;
+            $jenis = $penilaian->kriteria->jenis; // asumsi relasi kriteria ada
 
-            $range = $maxValues[$kriteria->id] - $minValues[$kriteria->id];
+            $range = $maxValues[$kriteriaId] - $minValues[$kriteriaId];
 
-            // Handle division by zero
             if ($range == 0) {
-                $normalized = 1; // atau 0, tergantung kebutuhan
+                $normalized = 0.5; // nilai tengah ketika semua nilai sama
             } else {
-                if ($kriteria->jenis == 'benefit') {
-                    $normalized = ($value - $minValues[$kriteria->id]) / $range;
-                } else {
-                    $normalized = ($maxValues[$kriteria->id] - $value) / $range;
-                }
+                $normalized = ($jenis == 'benefit')
+                    ? ($value - $minValues[$kriteriaId]) / $range
+                    : ($maxValues[$kriteriaId] - $value) / $range;
             }
 
-            $matrix[$penilaian->alternatif_id][$penilaian->kriteria_id] = $normalized;
+            $matrix[$penilaian->alternatif_id][$kriteriaId] = $normalized;
         }
 
         return $matrix;
@@ -160,14 +158,26 @@ class VikorCalculationController extends Controller
         // Urutkan Q dari kecil ke besar
         asort($qValues);
 
-        // Beri ranking
+        // Beri ranking dengan handling nilai sama
         $rankings = [];
-        $rank = 1;
+        $prevQ = null;
+        $rank = 0;
+        $skip = 0;
+
         foreach ($qValues as $alternatifId => $q) {
+            if ($q !== $prevQ) {
+                $rank += 1 + $skip;
+                $skip = 0;
+            } else {
+                $skip++;
+            }
+
             $rankings[$alternatifId] = [
                 'q' => $q,
-                'rank' => $rank++
+                'rank' => $rank
             ];
+
+            $prevQ = $q;
         }
 
         return $rankings;
@@ -188,5 +198,21 @@ class VikorCalculationController extends Controller
                 'ranking' => $data['rank']
             ]);
         }
+    }
+
+    public function exportPDF()
+    {
+        $data = [
+            'title' => 'Laporan Hasil Perhitungan VIKOR',
+            'calculations' => VikorCalculation::with('alternatif')
+                ->orderBy('ranking')
+                ->get(),
+            'kriterias' => Kriteria::all(),
+            'alternatifs' => Alternatif::with('penilaian.kriteria')->get(),
+            'jumlah_lulus' => request('jumlah_lulus', 5)
+        ];
+
+        $pdf = Pdf::loadView('perhitungan.export', $data);
+        return $pdf->download('hasil_vikor_' . date('Ymd') . '.pdf');
     }
 }

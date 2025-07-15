@@ -22,9 +22,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/perhitungan">Perhitungan VIKOR</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="/hasil">Hasil</a>
-                </li>
+                </li> --}}
             </ul>
             <form action="{{ route('logout') }}" method="POST" class="d-flex">
                 @csrf
