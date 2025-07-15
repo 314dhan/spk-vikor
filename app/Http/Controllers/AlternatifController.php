@@ -42,4 +42,18 @@ class AlternatifController extends Controller
         $alternatif->delete();
         return redirect()->back()->with('success', 'Alternatif berhasil dihapus.');
     }
+
+    public function destroyAll()
+    {
+        // Hapus semua data penilaian yang terkait dengan alternatif
+        \App\Models\Penilaian::query()->delete();
+        
+        // Hapus semua data perhitungan VIKOR yang terkait dengan alternatif
+        \App\Models\VikorCalculation::query()->delete();
+        
+        // Hapus semua data alternatif
+        Alternatif::query()->delete();
+
+        return redirect()->route('alternatif.index')->with('success', 'Semua data alternatif berhasil dihapus.');
+    }
 }

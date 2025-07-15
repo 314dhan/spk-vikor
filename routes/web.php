@@ -60,7 +60,13 @@ Route::middleware('auth')->group(function () {
     | Alternatif Routes
     |--------------------------------------------------------------------------
     */
-    Route::resource('alternatif', AlternatifController::class);
+    Route::prefix('alternatif')->controller(AlternatifController::class)->group(function () {
+        Route::get('/', 'index')->name('alternatif.index');
+        Route::post('/', 'store')->name('alternatif.store');
+        Route::put('/{alternatif}', 'update')->name('alternatif.update');
+        Route::delete('/{alternatif}', 'destroy')->name('alternatif.destroy');
+        Route::delete('/', 'destroyAll')->name('alternatif.destroyAll');
+    });
 
     /*
     |--------------------------------------------------------------------------

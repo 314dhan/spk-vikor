@@ -8,9 +8,16 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5>Data Alternatif</h5>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAlternatifTambah">
-                Tambah Alternatif
-            </button>
+            <div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAlternatifTambah">
+                    Tambah Alternatif
+                </button>
+                <form action="{{ route('alternatif.destroyAll') }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus SEMUA alternatif? Tindakan ini tidak dapat dibatalkan!')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Hapus Semua</button>
+                </form>
+            </div>
         </div>
 
         <div class="card-body">
