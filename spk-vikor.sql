@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 20 Bulan Mei 2025 pada 15.31
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Host: localhost:3306
+-- Waktu pembuatan: 16 Jul 2025 pada 14.00
+-- Versi server: 8.0.30
+-- Versi PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `alternatifs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `kode_alternatif` varchar(255) NOT NULL,
-  `nama_alternatif` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `kode_alternatif` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_alternatif` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -41,24 +41,24 @@ CREATE TABLE `alternatifs` (
 --
 
 INSERT INTO `alternatifs` (`id`, `kode_alternatif`, `nama_alternatif`, `description`, `created_at`, `updated_at`) VALUES
-(21, '01', 'Arjuna Reyhan Wibawa', 'siswa', NULL, '2025-05-06 22:40:38'),
-(22, '02', 'Muhammad Dafa Alfaris', 'siswa', NULL, '2025-05-06 22:40:44'),
-(23, '03', 'Hikmah Dhika Nur Syafaatulloh', 'siswa', NULL, '2025-05-06 22:40:50'),
-(24, '04', 'Saiful Hidayat', 'siswa', NULL, '2025-05-06 22:40:54'),
-(25, '05', 'Rizki Andika Pratama', 'siswa', NULL, '2025-05-06 22:41:02'),
-(26, '06', 'Iqbal Al Rasyiig', 'siswa', NULL, '2025-05-06 22:41:08'),
-(27, '07', 'Muhamad Maulana Sawaludin', 'siswa', NULL, '2025-05-06 22:41:14'),
-(28, '08', 'Villaxandria Violensiera Virtous Vierosa Virginia', 'siswa', NULL, '2025-05-06 22:41:20'),
-(29, '09', 'Crespo Marfandi Pratama', 'siswa', NULL, '2025-05-06 22:41:26'),
-(30, '10', 'Muhammad A\'Azif Junaidi', 'siswa', NULL, '2025-05-06 22:41:30'),
-(31, '11', 'Julian Fahmi', 'siswa', NULL, '2025-05-06 22:41:37'),
-(32, '12', 'Firda Aulia', 'siswa', NULL, '2025-05-06 22:41:43'),
-(33, '13', 'Tantri Pramudita', 'siswa', NULL, '2025-05-06 22:41:48'),
-(34, '14', 'Firdaus Abdul Ghanny', 'siswa', NULL, '2025-05-06 22:41:56'),
-(35, '15', 'Sapta', 'siswa', NULL, '2025-05-06 22:42:04'),
-(36, '16', 'Jamaludin', 'siswa', NULL, '2025-05-06 22:42:10'),
-(37, '17', 'Indra Priatna', 'siswa', NULL, '2025-05-06 22:42:15'),
-(38, '18', 'Elviana', 'siswa', NULL, '2025-05-06 22:42:22');
+(21, 'a1', 'Arjuna Reyhan Wibawa', 'siswa', NULL, '2025-06-07 01:40:15'),
+(22, 'a2', 'Muhammad Dafa Alfaris', 'siswa', NULL, '2025-06-07 01:40:21'),
+(23, 'a3', 'Hikmah Dhika Nur Syafaatulloh', 'siswa', NULL, '2025-06-07 01:40:25'),
+(24, 'a4', 'Saiful Hidayat', 'siswa', NULL, '2025-06-07 01:40:29'),
+(25, 'a5', 'Rizki Andika Pratama', 'siswa', NULL, '2025-06-07 01:40:33'),
+(26, 'a6', 'Iqbal Al Rasyiig', 'siswa', NULL, '2025-06-07 01:40:37'),
+(27, 'a7', 'Muhamad Maulana Sawaludin', 'siswa', NULL, '2025-06-07 01:40:40'),
+(28, 'a8', 'Villaxandria Violensiera Virtous Vierosa Virginia', 'siswa', NULL, '2025-06-07 01:40:45'),
+(29, 'a9', 'Crespo Marfandi Pratama', 'siswa', NULL, '2025-06-07 01:40:54'),
+(30, 'a10', 'Muhammad A\'Azif Junaidi', 'siswa', NULL, '2025-06-07 01:40:58'),
+(31, 'a11', 'Julian Fahmi', 'siswa', NULL, '2025-06-07 01:41:02'),
+(32, 'a12', 'Firda Aulia', 'siswa', NULL, '2025-06-07 01:41:07'),
+(33, 'a13', 'Tantri Pramudita', 'siswa', NULL, '2025-06-07 01:41:12'),
+(34, 'a14', 'Firdaus Abdul Ghanny', 'siswa', NULL, '2025-06-07 01:41:16'),
+(35, 'a15', 'Sapta', 'siswa', NULL, '2025-06-07 01:41:22'),
+(36, 'a16', 'Jamaludin', 'siswa', NULL, '2025-06-07 01:41:26'),
+(37, 'a17', 'Indra Priatna', 'siswa', NULL, '2025-06-07 01:41:29'),
+(38, 'a18', 'Elviana', 'siswa', NULL, '2025-06-07 01:41:33');
 
 -- --------------------------------------------------------
 
@@ -67,12 +67,12 @@ INSERT INTO `alternatifs` (`id`, `kode_alternatif`, `nama_alternatif`, `descript
 --
 
 CREATE TABLE `kriterias` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `kode_kriteria` varchar(255) NOT NULL,
-  `nama_kriteria` varchar(255) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `kode_kriteria` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_kriteria` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `bobot` decimal(5,2) NOT NULL,
-  `jenis` enum('cost','benefit') NOT NULL,
-  `description` text DEFAULT NULL,
+  `jenis` enum('cost','benefit') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -82,12 +82,12 @@ CREATE TABLE `kriterias` (
 --
 
 INSERT INTO `kriterias` (`id`, `kode_kriteria`, `nama_kriteria`, `bobot`, `jenis`, `description`, `created_at`, `updated_at`) VALUES
-(2, 'a1', 'Ranking di kelas', 0.30, 'cost', 'Rank di kelas', '2025-05-06 08:49:05', '2025-05-11 04:56:59'),
-(3, 'a2', 'Nilai Rata Rata Raport', 0.30, 'benefit', 'Nilai rata rata pada raport', '2025-05-06 09:20:09', '2025-05-06 22:31:54'),
-(4, 'a3', 'Datang Terlambat', 0.10, 'cost', 'Ketepatan siswa dalam datang ke sekolah', '2025-05-06 09:21:22', '2025-05-06 09:21:22'),
-(5, 'a4', 'Bolos Sekolah', 0.10, 'cost', 'Keseringan siswa dalam disiplin disekolah', '2025-05-06 09:22:40', '2025-05-06 09:22:40'),
-(6, 'a5', 'Tawuran', 0.10, 'cost', 'Perilaku siswa', '2025-05-06 09:23:05', '2025-05-06 22:51:25'),
-(7, 'a6', 'Terlibat Kasus Narkoba', 0.10, 'cost', 'Perilaku siswa di sekolah', '2025-05-06 22:51:53', '2025-05-06 22:51:53');
+(2, 'c1', 'Ranking di kelas', 0.26, 'benefit', 'Rank di kelas', '2025-05-06 08:49:05', '2025-07-14 22:09:15'),
+(3, 'c2', 'Nilai Rata Rata Raport', 0.21, 'benefit', 'Nilai rata rata pada raport', '2025-05-06 09:20:09', '2025-07-14 22:09:19'),
+(4, 'c3', 'Datang Terlambat', 0.15, 'cost', 'Ketepatan siswa dalam datang ke sekolah', '2025-05-06 09:21:22', '2025-07-14 22:12:55'),
+(5, 'c4', 'Bolos Sekolah', 0.15, 'cost', 'Keseringan siswa dalam disiplin disekolah', '2025-05-06 09:22:40', '2025-07-14 22:13:00'),
+(6, 'c5', 'Tawuran', 0.10, 'cost', 'Perilaku siswa', '2025-05-06 09:23:05', '2025-06-07 01:15:37'),
+(7, 'c6', 'Terlibat Kasus Narkoba', 0.10, 'cost', 'Perilaku siswa di sekolah', '2025-05-06 22:51:53', '2025-06-07 01:15:41');
 
 -- --------------------------------------------------------
 
@@ -96,9 +96,9 @@ INSERT INTO `kriterias` (`id`, `kode_kriteria`, `nama_kriteria`, `bobot`, `jenis
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -119,9 +119,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `penilaians` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `alternatif_id` bigint(20) UNSIGNED NOT NULL,
-  `kriteria_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `alternatif_id` bigint UNSIGNED NOT NULL,
+  `kriteria_id` bigint UNSIGNED NOT NULL,
   `nilai` double NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -248,9 +248,9 @@ INSERT INTO `penilaians` (`id`, `alternatif_id`, `kriteria_id`, `nilai`, `create
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -269,12 +269,12 @@ INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `updated_at`) V
 --
 
 CREATE TABLE `vikor_calculations` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `alternatif_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `alternatif_id` bigint UNSIGNED NOT NULL,
   `nilai_s` decimal(10,4) NOT NULL,
   `nilai_r` decimal(10,4) NOT NULL,
   `nilai_q` decimal(10,4) NOT NULL,
-  `ranking` int(10) UNSIGNED DEFAULT NULL,
+  `ranking` int UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -284,24 +284,24 @@ CREATE TABLE `vikor_calculations` (
 --
 
 INSERT INTO `vikor_calculations` (`id`, `alternatif_id`, `nilai_s`, `nilai_r`, `nilai_q`, `ranking`, `created_at`, `updated_at`) VALUES
-(1, 30, 0.2000, 0.1000, 0.0000, 1, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(2, 32, 0.2000, 0.1000, 0.0000, 2, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(3, 34, 0.2000, 0.1000, 0.0000, 3, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(4, 21, 0.3500, 0.1500, 0.5000, 4, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(5, 29, 0.3500, 0.1500, 0.5000, 5, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(6, 31, 0.3500, 0.1500, 0.5000, 6, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(7, 33, 0.3500, 0.1500, 0.5000, 7, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(8, 37, 0.3500, 0.1500, 0.5000, 8, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(9, 23, 0.4500, 0.1500, 0.8333, 9, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(10, 28, 0.4500, 0.1500, 0.8333, 10, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(11, 22, 0.5000, 0.1500, 1.0000, 11, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(12, 24, 0.5000, 0.3000, 1.0000, 12, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(13, 25, 0.5000, 0.1500, 1.0000, 13, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(14, 26, 0.5000, 0.3000, 1.0000, 14, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(15, 27, 0.5000, 0.3000, 1.0000, 15, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(16, 35, 0.5000, 0.3000, 1.0000, 16, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(17, 36, 0.5000, 0.3000, 1.0000, 17, '2025-05-11 06:46:42', '2025-05-11 06:46:42'),
-(18, 38, 0.5000, 0.1500, 1.0000, 18, '2025-05-11 06:46:42', '2025-05-11 06:46:42');
+(1, 24, 0.1250, 0.0750, 0.0000, 1, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(2, 27, 0.1250, 0.0750, 0.0000, 1, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(3, 35, 0.1250, 0.0750, 0.0000, 1, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(4, 22, 0.3600, 0.1300, 0.3768, 4, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(5, 25, 0.3600, 0.1300, 0.3768, 4, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(6, 38, 0.3600, 0.1300, 0.3768, 4, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(7, 30, 0.3850, 0.2600, 0.7524, 7, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(8, 32, 0.3850, 0.2600, 0.7524, 7, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(9, 34, 0.3850, 0.2600, 0.7524, 7, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(10, 21, 0.4900, 0.2600, 0.8544, 10, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(11, 29, 0.4900, 0.2600, 0.8544, 10, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(12, 31, 0.4900, 0.2600, 0.8544, 10, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(13, 33, 0.4900, 0.2600, 0.8544, 10, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(14, 37, 0.4900, 0.2600, 0.8544, 10, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(15, 28, 0.5900, 0.2600, 0.9515, 15, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(16, 26, 0.5950, 0.2600, 0.9563, 16, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(17, 36, 0.5950, 0.2600, 0.9563, 16, '2025-07-16 00:33:04', '2025-07-16 00:33:04'),
+(18, 23, 0.6400, 0.2600, 1.0000, 18, '2025-07-16 00:33:04', '2025-07-16 00:33:04');
 
 --
 -- Indexes for dumped tables
@@ -357,37 +357,37 @@ ALTER TABLE `vikor_calculations`
 -- AUTO_INCREMENT untuk tabel `alternatifs`
 --
 ALTER TABLE `alternatifs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT untuk tabel `kriterias`
 --
 ALTER TABLE `kriterias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `penilaians`
 --
 ALTER TABLE `penilaians`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=654;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=660;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `vikor_calculations`
 --
 ALTER TABLE `vikor_calculations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
